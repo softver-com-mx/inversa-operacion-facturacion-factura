@@ -253,7 +253,7 @@ public class FacturaServiceImpl implements FacturaService{
     }
     
     @Override
-    public String timbrarFactura(InfoAuditoria info, Id filtro) throws Exception {
+    public FacturaConcepto timbrarFactura(InfoAuditoria info, Id filtro) throws Exception {
         if (filtro == null) {
             throw new OperationNotPermittedSoftverException(
                 "El filtro es requerido"
@@ -287,6 +287,12 @@ public class FacturaServiceImpl implements FacturaService{
                     , "3"
                     , info.getIdUsuario()
                 );
+                facturaData.reajustarFolio(
+                    info.getIdEmpresa()
+                    , facturaConcepto.getSerie()
+                    , facturaConcepto.getFolio()
+                    , facturaConcepto.getId()
+                );
             break;
             case "3":
                 // se comprueba que ya este timbrado, si es asi se regresa el uuid y se cambia el estado a 4
@@ -301,7 +307,8 @@ public class FacturaServiceImpl implements FacturaService{
                         , "4"
                         , info.getIdUsuario()
                     );
-                    return uuid;
+                    facturaConcepto = obtenerPorId(info, factura);
+                    return facturaConcepto;
                 } else {
                     throw new OperationNotPermittedSoftverException(
                         "Procesando timbrado, si el mensaje persiste, comunicarse con soporte técnico."
@@ -312,6 +319,7 @@ public class FacturaServiceImpl implements FacturaService{
                     "Una factura inactiva, timbrada previamente, en proceso de cancelación o cancelada, no puede timbrarse."
                 );
         }
+        facturaConcepto = obtenerPorId(info, factura);
         // validacion de fechas de emision
         validarFechaEmision(
             facturaConcepto
@@ -355,8 +363,9 @@ public class FacturaServiceImpl implements FacturaService{
                 , comprobante.getComplemento().getTimbreFiscalDigital().getUUID()
                 , info.getIdUsuario()
             );
+            facturaConcepto.setUuid(comprobante.getComplemento().getTimbreFiscalDigital().getUUID());
         }
-        return comprobante.getComplemento().getTimbreFiscalDigital().getUUID();
+        return facturaConcepto;
     }
     
     @Override

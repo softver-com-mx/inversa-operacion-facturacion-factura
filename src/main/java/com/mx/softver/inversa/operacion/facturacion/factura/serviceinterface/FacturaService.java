@@ -62,7 +62,7 @@ public interface FacturaService {
      * @return
      * @throws Exception 
      */
-    public String timbrarFactura(InfoAuditoria info, Id filtro) throws Exception;
+    public FacturaConcepto timbrarFactura(InfoAuditoria info, Id filtro) throws Exception;
     
     /**
      * metodo para cancelar una factura

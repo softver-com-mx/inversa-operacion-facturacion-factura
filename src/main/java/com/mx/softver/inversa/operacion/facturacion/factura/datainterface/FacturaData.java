@@ -233,4 +233,14 @@ public interface FacturaData {
      * @throws Exception 
      */
     public void crearFacturaRelacionada(int idFactura, FacturaRelacionada entidad, int idUsuario) throws Exception;
+    
+    /**
+     * metodo para reajustar el folio de una factura antes de ser timbrada
+     * @param idEmpresa
+     * @param serie
+     * @param folio
+     * @param idFactura
+     * @throws Exception 
+     */
+    public void reajustarFolio(int idEmpresa, String serie, int folio, int idFactura) throws Exception;
 }
