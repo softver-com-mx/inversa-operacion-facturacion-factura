@@ -14,6 +14,7 @@ import com.mx.softver.inversa.operacion.facturacion.factura.entity.FacturaFiltro
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.FacturaRelacionada;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.FacturaVistaPrevia;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.Impuesto;
+import com.mx.softver.inversa.operacion.facturacion.factura.entity.ReporteFactura;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.UuidConceptos;
 import java.util.List;
 
@@ -243,4 +244,10 @@ public interface FacturaData {
      * @throws Exception 
      */
     public void reajustarFolio(int idEmpresa, String serie, int folio, int idFactura) throws Exception;
+
+    
+        public List<ReporteFactura> obtenerDatosReporteDescargar(int idEmpresa, FacturaFiltro filtro) throws Exception;
+
 }
+
+

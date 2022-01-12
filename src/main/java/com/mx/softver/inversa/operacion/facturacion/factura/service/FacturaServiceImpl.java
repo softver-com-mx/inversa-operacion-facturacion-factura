@@ -26,6 +26,7 @@ import com.mx.softver.inversa.operacion.facturacion.factura.entity.FacturaVistaP
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.IdCorreo;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.Impuesto;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.LogoCompania;
+import com.mx.softver.inversa.operacion.facturacion.factura.entity.ReporteFactura;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.UuidConceptos;
 import com.mx.softver.inversa.operacion.facturacion.factura.serviceinterface.ComprobanteService;
 import com.mx.softver.inversa.operacion.facturacion.factura.serviceinterface.FacturaService;
@@ -41,11 +42,16 @@ import com.softver.erp.comunes.comprobantefiscal.entity.cdfi33.Comprobante;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  *
@@ -1157,5 +1163,39 @@ public class FacturaServiceImpl implements FacturaService{
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
         byte[] bArray = pngOutputStream.toByteArray();
         return new String(Base64.getEncoder().encode(bArray), "UTF-8");
+    }
+
+    @Override
+    public Archivo descargarReporte(InfoAuditoria info, FacturaFiltro filtro) throws Exception {
+
+  DateFormat dtf = new SimpleDateFormat("yyyy/MM/dd");
+        Date fecha = new Date();
+        
+        validarDatosAuditoria(info);
+        
+        if(filtro == null){
+            throw new OperationNotPermittedSoftverException("La entidad es requerida");
+        }
+        
+        List<ReporteFactura> listaFacturas = facturaData.obtenerDatosReporteDescargar(info.getIdEmpresa(), filtro);
+        if(listaFacturas.size() < 1){
+            throw new OperationNotPermittedSoftverException("No se encontraron resultados con "
+                    + "los filtros ingresados");
+        }
+        ExcelServiceImpl excelServiceImpl = new ExcelServiceImpl(); 
+     
+        XSSFWorkbook reporte = excelServiceImpl.crearExcelVentasDiarias(listaFacturas);
+        byte[] reporteEnBytes = convertirDocumentoABytes(reporte);
+        return new Archivo("Reporte de Facturas "+dtf.format(fecha), "xlsx","", reporteEnBytes);
+    }
+    
+    private byte[] convertirDocumentoABytes(XSSFWorkbook documentoExcel) throws Exception{
+        ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+        try{
+            documentoExcel.write(byteArray);
+        }catch(IOException ex){
+            throw new OperationNotPermittedSoftverException("Error al convertir el documento a bytes");
+        }
+        return byteArray.toByteArray(); 
     }
 }

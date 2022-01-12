@@ -81,6 +81,15 @@ public interface FacturaService {
      * @throws Exception 
      */
     public Cfdi comprobarCancelacion(InfoAuditoria info, Factura entidad) throws Exception;
+        
+    /**
+     * metodo para descargar el reporte de facturas
+     * @param info
+     * @param filtro
+     * @return
+     * @throws Exception 
+     */
+    public Archivo descargarReporte(InfoAuditoria info, FacturaFiltro filtro) throws Exception;
     
     /**
      * metodo para descargar el xml de una factura
@@ -89,6 +98,7 @@ public interface FacturaService {
      * @return
      * @throws Exception 
      */
+    
     public Archivo descargarXml(InfoAuditoria info, Factura entidad) throws Exception;
     
     /**
