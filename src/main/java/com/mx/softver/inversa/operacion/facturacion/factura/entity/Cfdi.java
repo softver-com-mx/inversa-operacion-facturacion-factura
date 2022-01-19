@@ -5,11 +5,15 @@
  */
 package com.mx.softver.inversa.operacion.facturacion.factura.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  *
  * @author jhernandez
  */
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Cfdi {
+    
     private int id;
     private String tipo;
     private String uuid;
@@ -24,6 +28,8 @@ public class Cfdi {
     private String estadoCancelacion;
     private String acuseCancelacion;
     private String fechaCancelacion;
+    private String motivoCancelacion;
+    private String folioSustitucion;
 
     /**
      * @return the id
@@ -219,5 +225,21 @@ public class Cfdi {
      */
     public void setFechaCancelacion(String fechaCancelacion) {
         this.fechaCancelacion = fechaCancelacion;
+    }
+
+    public String getMotivoCancelacion() {
+        return motivoCancelacion;
+    }
+
+    public void setMotivoCancelacion(String motivoCancelacion) {
+        this.motivoCancelacion = motivoCancelacion;
+    }
+
+    public String getFolioSustitucion() {
+        return folioSustitucion;
+    }
+
+    public void setFolioSustitucion(String folioSustitucion) {
+        this.folioSustitucion = folioSustitucion;
     }
 }
