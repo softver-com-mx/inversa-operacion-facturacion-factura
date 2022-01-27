@@ -42,6 +42,9 @@ public class Factura {
     private Double saldoAPagar;
     private int parcialidad;
     private String nombreCliente;
+    private String folioTicket;
+
+
     
     private final String[] tiposComprobantes = {"I", "E", "T", "P", "N"};
 
@@ -598,4 +601,12 @@ public class Factura {
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
     }
+    public String getFolioTicket() {
+        return folioTicket;
+    }
+
+    public void setFolioTicket(String folioTicket) {
+        this.folioTicket = folioTicket;
+    }
+    
 }
