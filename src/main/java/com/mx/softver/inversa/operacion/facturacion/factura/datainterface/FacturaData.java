@@ -6,6 +6,7 @@
 package com.mx.softver.inversa.operacion.facturacion.factura.datainterface;
 
 
+import com.mx.softver.inversa.operacion.facturacion.factura.entity.Cfdi;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.Concepto;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.ConceptoCompleto;
 import com.mx.softver.inversa.operacion.facturacion.factura.entity.Factura;
@@ -130,6 +131,41 @@ public interface FacturaData {
     public void actualizarEstatus(int idEmpresa, int idFactura, String estatus, int idUsuario) throws Exception;
     
     /**
+     * metodo para cancelar una factura
+     *
+     * @param idUsuarioAuditoria
+     * @param comprobante
+     * @throws Exception
+     */
+    public void cancelar(int idUsuarioAuditoria, Cfdi comprobante) throws Exception;
+    
+    /**
+     * metodo para poner a una factura en proceso de cancelacion
+     *
+     * @param idUsuarioAuditoria
+     * @param comprobante
+     * @throws Exception
+     */
+    public void cancelacionEnProceso(int idUsuarioAuditoria, Cfdi comprobante) throws Exception;
+    
+    /**
+     * metodo para poner a una factura en proceso de cancelacion
+     *
+     * @param idUsuarioAuditoria
+     * @param comprobante
+     * @throws Exception
+     */
+    public void anularCancelacion(int idUsuarioAuditoria, Cfdi comprobante) throws Exception;
+    
+    /**
+     * metodo para obtener los datos del cfdi que quedo en proceso de timbrado
+     * @param uuid
+     * @return
+     * @throws Exception 
+     */
+    public Cfdi obtenerComprobanteACancelar(String uuid) throws Exception;
+    
+    /**
      * metodo para obtener el estatus de una factura
      * @param idFactura
      * @return
@@ -246,7 +282,15 @@ public interface FacturaData {
     public void reajustarFolio(int idEmpresa, String serie, int folio, int idFactura) throws Exception;
 
     
-        public List<ReporteFactura> obtenerDatosReporteDescargar(int idEmpresa, FacturaFiltro filtro) throws Exception;
+    public List<ReporteFactura> obtenerDatosReporteDescargar(int idEmpresa, FacturaFiltro filtro) throws Exception;
+    
+    /**
+     * metodo para verificar si el CFDI no cancelable esta relacionado a otro CFDI por la clave 04
+     * @param uuid
+     * @return
+     * @throws Exception 
+     */
+    public boolean verificarRelacionCfdi(String uuid) throws Exception;
 
 }
 

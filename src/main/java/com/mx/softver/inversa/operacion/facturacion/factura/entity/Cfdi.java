@@ -30,6 +30,7 @@ public class Cfdi {
     private String fechaCancelacion;
     private String motivoCancelacion;
     private String folioSustitucion;
+    private boolean esRelacionado;
 
     /**
      * @return the id
@@ -241,5 +242,13 @@ public class Cfdi {
 
     public void setFolioSustitucion(String folioSustitucion) {
         this.folioSustitucion = folioSustitucion;
+    }
+
+    public boolean getEsRelacionado() {
+        return esRelacionado;
+    }
+
+    public void setEsRelacionado(boolean esRelacionado) {
+        this.esRelacionado = esRelacionado;
     }
 }

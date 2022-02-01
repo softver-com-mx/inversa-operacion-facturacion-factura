@@ -5,6 +5,7 @@
  */
 package com.mx.softver.inversa.operacion.facturacion.factura.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.softver.comunes.exception.MaxLimitExceededSoftverException;
 import com.softver.comunes.exception.OperationNotPermittedSoftverException;
 import com.softver.comunes.exception.RequiredFieldSoftverException;
@@ -39,6 +40,8 @@ public class Factura {
     private String uuid;
     private String claveTipoRelacion;
     private String estatus;
+    private String motivoCancelacion;
+    private String folioSustitucion;
     private Double saldoAPagar;
     private int parcialidad;
     private String nombreCliente;
@@ -578,6 +581,22 @@ public class Factura {
         this.estatus = estatus;
     }
 
+    public String getMotivoCancelacion() {
+        return motivoCancelacion;
+    }
+
+    public void setMotivoCancelacion(String motivoCancelacion) {
+        this.motivoCancelacion = motivoCancelacion;
+    }
+
+    public String getFolioSustitucion() {
+        return folioSustitucion;
+    }
+
+    public void setFolioSustitucion(String folioSustitucion) {
+        this.folioSustitucion = folioSustitucion;
+    }
+
     public Double getSaldoAPagar() {
         return saldoAPagar;
     }
@@ -608,5 +627,4 @@ public class Factura {
     public void setFolioTicket(String folioTicket) {
         this.folioTicket = folioTicket;
     }
-    
 }

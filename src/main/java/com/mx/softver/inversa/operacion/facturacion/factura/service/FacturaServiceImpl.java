@@ -417,6 +417,16 @@ public class FacturaServiceImpl implements FacturaService{
         Cfdi cfdi = new Cfdi();
         cfdi.setUuid(entidad.getUuid());
         cfdi.setRfcEmisor(info.getRfcEmpresa());
+        cfdi.setMotivoCancelacion(entidad.getMotivoCancelacion());
+        if (entidad.getMotivoCancelacion().equals("01")) {
+            if (entidad.getFolioSustitucion() == null || entidad.getFolioSustitucion().isEmpty()) {
+                throw new OperationNotPermittedSoftverException("El folio de sustitucion es requerido");
+            }
+            cfdi.setFolioSustitucion(entidad.getFolioSustitucion());
+        }
+        if (facturaData.verificarRelacionCfdi(cfdi.getUuid())) {
+            cfdi.setEsRelacionado(true);
+        }
         ClienteApiWSData clienteApi = new ClienteApiWSData(
             facturaData.obtenerTokenServicio(info.getIdEmpresa())
             , info.getRfcEmpresa()
@@ -437,21 +447,9 @@ public class FacturaServiceImpl implements FacturaService{
         }
         cfdi = (Cfdi) respuestaBase.getEntidad();
         if (cfdi.getCancelado()) {
-            // se actualiza el estatus a cancelado
-            facturaData.actualizarEstatus(
-                info.getIdEmpresa()
-                , entidad.getId()
-                , "6"
-                , info.getIdUsuario()
-            );
+            facturaData.cancelar(info.getIdUsuario(), cfdi);
         } else {
-            // se actualiza el estatus a en proceso de cancelado
-            facturaData.actualizarEstatus(
-                info.getIdEmpresa()
-                , entidad.getId()
-                , "5"
-                , info.getIdUsuario()
-            );
+            facturaData.cancelacionEnProceso(info.getIdUsuario(), cfdi);
         }
         return cfdi;
     }
@@ -495,8 +493,7 @@ public class FacturaServiceImpl implements FacturaService{
                 "No se puede comprobar la cancelacion de una factura que no haya iniciado su proceso de cancelacion"
             );
         }
-        Cfdi cfdi = new Cfdi();
-        cfdi.setUuid(entidad.getUuid());
+        Cfdi cfdi = facturaData.obtenerComprobanteACancelar(entidad.getUuid());
         cfdi.setRfcEmisor(info.getRfcEmpresa());
         ClienteApiWSData clienteApi = new ClienteApiWSData(
             facturaData.obtenerTokenServicio(info.getIdEmpresa())
@@ -518,13 +515,9 @@ public class FacturaServiceImpl implements FacturaService{
         }
         cfdi = (Cfdi) respuestaBase.getEntidad();
         if (cfdi.getCancelado()) {
-            // se actualiza el estatus a cancelado
-            facturaData.actualizarEstatus(
-                info.getIdEmpresa()
-                , entidad.getId()
-                , "6"
-                , info.getIdUsuario()
-            );
+            facturaData.cancelar(info.getIdUsuario(), cfdi);
+        } else {
+            facturaData.anularCancelacion(info.getIdUsuario(), cfdi);
         }
         
         return cfdi;
