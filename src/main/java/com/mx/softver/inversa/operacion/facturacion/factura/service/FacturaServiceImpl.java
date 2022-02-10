@@ -517,7 +517,9 @@ public class FacturaServiceImpl implements FacturaService{
         if (cfdi.getCancelado()) {
             facturaData.cancelar(info.getIdUsuario(), cfdi);
         } else {
-            facturaData.anularCancelacion(info.getIdUsuario(), cfdi);
+            if (cfdi.getEstadoCancelacion() != null && !cfdi.getEstadoCancelacion().equals("En proceso")) {
+                facturaData.anularCancelacion(info.getIdUsuario(), cfdi);
+            }
         }
         
         return cfdi;
