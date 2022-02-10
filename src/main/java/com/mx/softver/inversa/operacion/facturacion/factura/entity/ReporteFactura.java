@@ -10,9 +10,11 @@ package com.mx.softver.inversa.operacion.facturacion.factura.entity;
  * @author Luis Avbax
  */
 public class ReporteFactura extends FacturaVistaPrevia {
+
     String nombreEntidadFederativa;
     String concepto;
-    String observacion; 
+    String observacion;
+    int cantidad;
 
     public ReporteFactura() {
     }
@@ -39,5 +41,13 @@ public class ReporteFactura extends FacturaVistaPrevia {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }

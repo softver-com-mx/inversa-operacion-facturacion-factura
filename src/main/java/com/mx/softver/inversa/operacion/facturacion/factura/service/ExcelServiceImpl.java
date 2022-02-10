@@ -26,7 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ExcelServiceImpl  implements ExcelService{
     
-    private static final String[] COLUMNAS_REPORTE_FACTURAS = {"FECHA", "FOLIO",
+    private static final String[] COLUMNAS_REPORTE_FACTURAS = {"FECHA", "FOLIO", "CANTIDAD",
         "SERIE", "RFC", "RAZON SOCIAL", "ENTIDAD FEDERATIVA","CONCEPTO","OBSERVACIONES",
         "FORMA DE PAGO","METODO DE PAGO", "TOTAL SIN IVA", "TOTAL CON IVA", "ESTADO"};
     
@@ -52,27 +52,29 @@ public class ExcelServiceImpl  implements ExcelService{
             celdaFechaExpedicion.setCellValue(factura.getFechaExpedicion());
             XSSFCell celdaFolio = crearCelda(fila,1,estiloCentradoCelda);
             celdaFolio.setCellValue(factura.getFolio());
-            XSSFCell celdaProducto = crearCelda(fila,2, estiloCentradoCelda);
+            XSSFCell celdaCantidad = crearCelda(fila,2,estiloCentradoCelda);
+            celdaCantidad.setCellValue(factura.getCantidad());
+            XSSFCell celdaProducto = crearCelda(fila,3, estiloCentradoCelda);
             celdaProducto.setCellValue(factura.getSerie());
-            XSSFCell celdaRfc = crearCelda(fila,3, estiloCentradoCelda);
+            XSSFCell celdaRfc = crearCelda(fila,4, estiloCentradoCelda);
             celdaRfc.setCellValue(factura.getRfcReceptor());
-            XSSFCell celdaRazonSocial = crearCelda(fila, 4, estiloCentradoCelda);
+            XSSFCell celdaRazonSocial = crearCelda(fila, 5, estiloCentradoCelda);
             celdaRazonSocial.setCellValue(factura.getNombreReceptor());   
-            XSSFCell celdaEntidadFed = crearCelda(fila, 5, estiloCentradoCelda);
+            XSSFCell celdaEntidadFed = crearCelda(fila, 6, estiloCentradoCelda);
             celdaEntidadFed.setCellValue(factura.getNombreEntidadFederativa());         
-            XSSFCell celdaConcepto = crearCelda(fila, 6, estiloCentradoCelda);
+            XSSFCell celdaConcepto = crearCelda(fila, 7, estiloCentradoCelda);
             celdaConcepto.setCellValue(factura.getConcepto());
-            XSSFCell celdaObservacion = crearCelda(fila, 7, estiloCentradoCelda);
+            XSSFCell celdaObservacion = crearCelda(fila, 8, estiloCentradoCelda);
             celdaObservacion.setCellValue(factura.getObservacion());           
-            XSSFCell celdaFormaPago = crearCelda(fila, 8, estiloCentradoCelda);
+            XSSFCell celdaFormaPago = crearCelda(fila, 9, estiloCentradoCelda);
             celdaFormaPago.setCellValue(factura.getFormaPago());           
-            XSSFCell celdaMetodoPago = crearCelda(fila, 9, estiloCentradoCelda);
+            XSSFCell celdaMetodoPago = crearCelda(fila, 10, estiloCentradoCelda);
             celdaMetodoPago.setCellValue(factura.getClaveMetodoPago());       
-            XSSFCell celdaSubtotal = crearCelda(fila, 10, estiloCeldaPrecio);
+            XSSFCell celdaSubtotal = crearCelda(fila, 11, estiloCeldaPrecio);
             celdaSubtotal.setCellValue(factura.getSubtotal());      
-            XSSFCell celdaTotal = crearCelda(fila, 11, estiloCeldaPrecio);
+            XSSFCell celdaTotal = crearCelda(fila, 12, estiloCeldaPrecio);
             celdaTotal.setCellValue(factura.getTotal());    
-            XSSFCell celdaEstatus = crearCelda(fila, 12, estiloCeldaPrecio);
+            XSSFCell celdaEstatus = crearCelda(fila, 13, estiloCeldaPrecio);
             celdaEstatus.setCellValue(factura.getEstatus());
         }
         ajustarColumnas(COLUMNAS_REPORTE_FACTURAS, hoja);
