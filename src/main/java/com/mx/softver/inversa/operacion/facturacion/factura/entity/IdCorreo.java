@@ -44,11 +44,6 @@ public class IdCorreo extends Id{
                 "El correo no puede ser vacio"
             );
         }
-        if (!correo.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")) {
-            throw new RequiredFieldSoftverException(
-                "El correo no es válido"
-            );
-        }
         this.correo = correo;
     }
 
