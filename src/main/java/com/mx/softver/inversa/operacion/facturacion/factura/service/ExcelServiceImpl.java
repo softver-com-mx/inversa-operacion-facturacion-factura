@@ -28,7 +28,7 @@ public class ExcelServiceImpl  implements ExcelService{
     
     private static final String[] COLUMNAS_REPORTE_FACTURAS = {"FECHA", "FOLIO", "CANTIDAD",
         "SERIE", "RFC", "RAZON SOCIAL", "ENTIDAD FEDERATIVA","CONCEPTO","OBSERVACIONES",
-        "FORMA DE PAGO","METODO DE PAGO", "TOTAL SIN IVA", "TOTAL CON IVA", "ESTADO"};
+        "FORMA DE PAGO","METODO DE PAGO", "TOTAL SIN IVA", "TOTAL CON IVA","DESCUENTO", "ESTADO"};
     
     private static final String[] COLUMNAS_REPORTE_PAGOS_FACTURA = {"FECHA EXPEDICIÓN", "FOLIO",
         "SERIE", "RFC", "RAZON SOCIAL", "FORMA DE PAGO", "FOLIO-COTIZACIÓN", "SUBTOTAL", "IVA", "TOTAL CON IVA", "ESTADO",
@@ -73,8 +73,10 @@ public class ExcelServiceImpl  implements ExcelService{
             XSSFCell celdaSubtotal = crearCelda(fila, 11, estiloCeldaPrecio);
             celdaSubtotal.setCellValue(factura.getSubtotal());      
             XSSFCell celdaTotal = crearCelda(fila, 12, estiloCeldaPrecio);
-            celdaTotal.setCellValue(factura.getTotal());    
-            XSSFCell celdaEstatus = crearCelda(fila, 13, estiloCeldaPrecio);
+            celdaTotal.setCellValue(factura.getTotal());  
+            XSSFCell celdaDescuento = crearCelda(fila, 13, estiloCeldaPrecio);
+            celdaDescuento.setCellValue(factura.getDescuento());  
+            XSSFCell celdaEstatus = crearCelda(fila, 14, estiloCeldaPrecio);
             celdaEstatus.setCellValue(factura.getEstatus());
         }
         ajustarColumnas(COLUMNAS_REPORTE_FACTURAS, hoja);
