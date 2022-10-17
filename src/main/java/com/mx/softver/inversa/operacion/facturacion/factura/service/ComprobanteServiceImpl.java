@@ -529,9 +529,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                             traslado.setImpuesto(trasladado.getImpuesto());
                             traslado.setTipoFactor(trasladado.getTipoFactor());
                             traslado.setTasaOCuota(trasladado.getTasaOCuota());
-                            traslado.setImporte(
-                                redondear(trasladado.getImporte(), 2)
-                            );
+                            traslado.setImporte(trasladado.getImporte());
                             traslados.add(traslado);
                         } else {
                             int contador = 0;
@@ -554,8 +552,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                                     trasladado.getTipoFactor());
                                 traslado.setTasaOCuota(
                                     trasladado.getTasaOCuota());
-                                traslado.setImporte(
-                                    redondear(trasladado.getImporte(), 2));
+                                traslado.setImporte(trasladado.getImporte());
                                 traslados.add(traslado);
                             } else {
                                 for (int k = 0; k < traslados.size(); k++) {
@@ -567,8 +564,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                                             traslados.get(k).getTasaOCuota())) {
                                         
                                         traslados.get(k).setImporte(
-                                            redondear(traslados.get(k).getImporte() 
-                                                + trasladado.getImporte(), 2)
+                                                traslados.get(k).getImporte() + trasladado.getImporte()
                                         );
                                     }
                                 }
@@ -577,6 +573,9 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                     }
                 }
             }
+            traslados.forEach(traslado -> {
+                traslado.setImporte(redondear(traslado.getImporte(), 2));
+            });
             if (traslados.size() > 0) {
                 impuestoComprobante.setTraslados(traslados);
             }
