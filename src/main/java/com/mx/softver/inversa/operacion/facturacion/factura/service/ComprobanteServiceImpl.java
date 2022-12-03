@@ -174,7 +174,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                                 traslado.setImpuesto(impuesto.getClaveImpuestoSat());
                                 traslado.setTasaOCuota(impuesto.getTasaOCuota());
                                 traslado.setImporte(impuesto.getTotalImpuesto());
-                                traslado.setBase(base);
+                                traslado.setBase(redondear(base, 6));
                                 acumulado += traslado.getImporte();
                                 traslados.add(traslado);
                             }
@@ -185,7 +185,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                             retencion.setImpuesto(impuesto.getClaveImpuestoSat());
                             retencion.setTasaOCuota(impuesto.getTasaOCuota());
                             retencion.setImporte(impuesto.getTotalImpuesto());
-                            retencion.setBase(base);
+                            retencion.setBase(redondear(base, 6));
                             acumulado += retencion.getImporte();
                             retenciones.add(retencion);
                         }
@@ -235,7 +235,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                                 traslado.setImpuesto(impuesto.getClaveImpuestoSat());
                                 traslado.setTasaOCuota(impuesto.getTasaOCuota());
                                 traslado.setImporte(impuesto.getTotalImpuesto());
-                                traslado.setBase(baseAcumulada);
+                                traslado.setBase(redondear(baseAcumulada, 6));
                                 baseAcumulada += traslado.getImporte();
                                 traslados.add(traslado);
                             }
@@ -246,7 +246,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
                             retencion.setImpuesto(impuesto.getClaveImpuestoSat());
                             retencion.setTasaOCuota(impuesto.getTasaOCuota());
                             retencion.setImporte(impuesto.getTotalImpuesto());
-                            retencion.setBase(baseAcumulada);
+                            retencion.setBase(redondear(baseAcumulada, 6));
                             baseAcumulada += retencion.getImporte();
                             retenciones.add(retencion);
                         }
